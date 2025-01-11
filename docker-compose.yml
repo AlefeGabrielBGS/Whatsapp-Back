@@ -1,0 +1,41 @@
+services:
+  #Vue Service
+  #  node:
+  #    build: ./
+  #    container_name: whatsapp-back
+  #    restart: unless-stopped
+  #    tty: true
+  #    ports:
+  #      - "3000:3000"
+  #    volumes:
+  #      - .:/app
+  #    command: /bin/sh -c "npm start"
+  #    networks:
+  #      - whatsapp
+  #    external_links:
+  #      - mongo
+
+  mongo:
+    image: mongo:6.0.7-rc0
+    restart: always
+    container_name: mongo
+    environment:
+      SERVICE_NAME: mongo
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    tty: true
+    ports:
+      - "27017:27017"
+    volumes:
+      - './mongo:/data/db'
+    networks:
+      - whatsapp
+
+# Network docker
+networks:
+  whatsapp:
+    driver: bridge
+#Volumes
+volumes:
+  dbdata:
+    driver: local
